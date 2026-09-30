@@ -15,9 +15,9 @@ namespace SecsPureSocket
         public byte StreamNo { get; }
         public byte FunctionNo { get; }
         public MessageType MessageType { get; }
-        public uint SystemId { get; }        
+        public uint SystemId { get; }
         public byte[] RawData => GetRawData();
-        public bool NeedReplay => (StreamNo & 0x80) == 1;
+        public bool NeedReplay => (StreamNo >> 7) == 1;
 
         public HsmsMessageHeader(byte[] rawData)
         {
@@ -46,7 +46,7 @@ namespace SecsPureSocket
             MessageType = messageType;
             SystemId = systemId;
         }
-        
+
         private byte[] GetRawData()
         {
             IEnumerable<byte> deviceBytes = BitConverter.GetBytes(DeviceId).Reverse(); // Fixed length : 2

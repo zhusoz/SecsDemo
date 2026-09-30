@@ -28,7 +28,7 @@ public class HsmsMessage
 
     public HsmsMessage(byte[] rawData)
     {
-        if (rawData == null || rawData.Length < 0)
+        if (rawData == null || rawData.Length < 14)
         {
             throw new ArgumentException("Invalid raw data length for HSMS message.");
         }
