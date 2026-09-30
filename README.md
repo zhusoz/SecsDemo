@@ -254,5 +254,3 @@ byte[] raw = message.GetRawHsmsMessage();   // 4 + 10 + N 字节，可直接写�
 ## 许可证
 
 本项目基于 [MIT License](LICENSE.txt) 开源。
-
-> 注：`LICENSE.txt` 中的版权年份与作者占位符（`[year] [fullname]`）尚未填写，正式发布前请补齐。
