@@ -228,15 +228,8 @@ byte[] raw = message.GetRawHsmsMessage();   // 4 + 10 + N 字节，可直接写�
 
 | # | 位置 | 问题 | 建议 |
 | --- | --- | --- | --- |
-| 1 | `HsmsMessageHeader.NeedReplay` | 判定为 `(StreamNo & 0x80) == 1`，与运算结果只会是 `0x00/0x80`，**恒为 `false`** | 改为 `(StreamNo & 0x80) != 0` |
-| 2 | `HsmsMessage(byte[])` | 长度校验写成 `rawData.Length < 0`，恒不成立 | 改为校验 `< 14`（4 + 10） |
-| 3 | `HsmsGemClient.ListenReplyAsync` | 调用处未 `await`（fire-and-forget）；且使用固定 1024 字节缓冲区，**未处理 TCP 分包/粘包** | 按长度域先读 4 字节、再读剩余字节，循环组包 |
-| 4 | `HsmsSystemByteCounter.GetNextValue` | 未做原子操作，并发发送时 System Bytes 可能重复 | 使用 `Interlocked.Increment` |
-| 5 | `HsmsMessageData.GetSecsValueItems` | 抛 `NotImplementedException`，数据体未解析 | 按格式码实现 SECS-II 编解码 |
-| 6 | `HsmsMessageDataItem` / `HsmsMessageFactory` | 空壳类型，尚未实现 | 补齐数据项模型与工厂方法 |
-| 7 | `HsmsSessionStatus` | `DELSECTING` 拼写不规范 | 建议改为 `Deselecting` |
-| 8 | `HsmsMessageHeader` | 存在无用引用 `using static ...JavaScript.JSType;` | 清理 |
-
+| 1 | `HsmsGemClient.ListenReplyAsync` | 调用处未 `await`（fire-and-forget）；且使用固定 1024 字节缓冲区，**未处理 TCP 分包/粘包** | 按长度域先读 4 字节、再读剩余字节，循环组包 |
+| 2 | `HsmsSystemByteCounter.GetNextValue` | 未做原子操作，并发发送时 System Bytes 可能重复 | 使用 `Interlocked.Increment` |
 ---
 
 ## 路线图

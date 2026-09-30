@@ -29,5 +29,5 @@ public enum HsmsSessionStatus : byte
     /// <summary>
     /// 正在关闭会话
     /// </summary>
-    DELSECTING
+    Delsecting
 }
